@@ -105,14 +105,12 @@
             position: absolute;
             inset: 0;
             background: url('vlada-hero.jpg') center top / cover no-repeat;
-            opacity: 0.35;
-            filter: brightness(0.7);
             animation: heroImgReveal 2s ease 0.5s forwards;
             opacity: 0;
         }
         @keyframes heroImgReveal {
             from { opacity: 0; transform: scale(1.05); }
-            to { opacity: 0.3; transform: scale(1); }
+            to { opacity: 0.55; transform: scale(1); }
         }
 
         .hero-img-overlay {
@@ -120,9 +118,9 @@
             inset: 0;
             background: linear-gradient(
                 180deg,
-                rgba(26,26,26,0.5) 0%,
-                rgba(26,26,26,0.7) 40%,
-                rgba(26,26,26,0.95) 85%,
+                rgba(26,26,26,0.2) 0%,
+                rgba(26,26,26,0.4) 35%,
+                rgba(26,26,26,0.85) 75%,
                 var(--dark) 100%
             );
             z-index: 1;
