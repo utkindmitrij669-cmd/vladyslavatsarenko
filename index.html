@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Як отримувати 10+ заявок щодня з блогу</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FDF8F4;
+            --cream-dark: #F5EDE5;
+            --champagne: #E8D5C4;
+            --rose: #C4727F;
+            --rose-deep: #A3505E;
+            --rose-light: #E8A0AC;
+            --burgundy: #6B2D3E;
+            --dark: #1A1118;
+            --dark-soft: #2D1F28;
+            --gold: #C9A96E;
+            --gold-light: #E0C992;
+            --text-dark: #1A1118;
+            --text-muted: #6B5A64;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: var(--text-dark);
+            background: var(--cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(196, 114, 127, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -15%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-grain {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 820px;
+            padding: 40px 24px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            border: 1px solid var(--gold);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--rose-light);
+        }
+
+        .hero-title .accent {
+            color: var(--rose);
+            font-style: normal;
+        }
+
+        .hero-subtitle-line {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4.5vw, 56px);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--champagne);
+            line-height: 1.2;
+            margin-bottom: 36px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.55s forwards;
+        }
+
+        .hero-description {
+            font-size: clamp(15px, 1.8vw, 18px);
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 580px;
+            margin: 0 auto 48px;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.7s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+            color: var(--white);
+            font-family: 'Manrope', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 30px rgba(196, 114, 127, 0.3), 0 0 0 0 rgba(196, 114, 127, 0);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.85s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .hero-cta:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(196, 114, 127, 0.45), 0 0 0 3px rgba(196, 114, 127, 0.15);
+        }
+
+        .hero-cta svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(3px);
+        }
+
+        .hero-micro {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.35);
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 1s forwards;
+        }
+
+        /* ===== PAIN SECTION ===== */
+        .pain {
+            padding: 100px 24px;
+            background: var(--cream);
+            position: relative;
+        }
+
+        .pain-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--rose);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pain-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 56px;
+            line-height: 1.2;
+        }
+
+        .pain-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .pain-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 36px 28px;
+            text-align: center;
+            border: 1px solid rgba(200, 180, 165, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pain-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rose-light), var(--rose));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(107, 45, 62, 0.08);
+        }
+
+        .pain-card:hover::after {
+            opacity: 1;
+        }
+
+        .pain-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .pain-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+
+        .pain-card p {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .pain-quote {
+            max-width: 700px;
+            margin: 56px auto 0;
+            padding: 28px 32px;
+            background: linear-gradient(135deg, rgba(196,114,127,0.06) 0%, rgba(232,160,172,0.04) 100%);
+            border-left: 3px solid var(--rose);
+            border-radius: 0 16px 16px 0;
+        }
+
+        .pain-quote p {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-style: italic;
+            line-height: 1.7;
+            color: var(--dark-soft);
+        }
+
+        /* ===== RESULT SECTION ===== */
+        .result {
+            padding: 100px 24px;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(196,114,127,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .result-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .result .section-label {
+            color: var(--gold-light);
+        }
+
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 56px;
+            line-height: 1.2;
+        }
+
+        .result-title .accent {
+            color: var(--rose-light);
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 56px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px 24px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(196,114,127,0.2);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--rose-light);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-unit {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .stat-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        .result-cta-wrap {
+            text-align: center;
+        }
+
+        .result-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+            color: var(--white);
+            font-family: 'Manrope', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 30px rgba(196, 114, 127, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .result-cta:hover::before {
+            left: 100%;
+        }
+
+        .result-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(196, 114, 127, 0.45);
+        }
+
+        .result-cta svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .result-micro {
+            margin-top: 14px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 300;
+        }
+
+        /* ===== FOR WHO SECTION ===== */
+        .forwho {
+            padding: 100px 24px;
+            background: var(--cream);
+        }
+
+        .forwho-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .forwho-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 700;
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 48px;
+            line-height: 1.2;
+        }
+
+        .forwho-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .forwho-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 24px 28px;
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid rgba(200, 180, 165, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .forwho-item:hover {
+            border-color: var(--rose-light);
+            box-shadow: 0 4px 20px rgba(196,114,127,0.06);
+        }
+
+        .forwho-check {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rose-light), var(--rose));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .forwho-check svg {
+            width: 14px;
+            height: 14px;
+            color: white;
+        }
+
+        .forwho-item p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-soft);
+        }
+
+        .forwho-item p strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* ===== FINAL CTA ===== */
+        .final {
+            padding: 100px 24px;
+            background: var(--dark);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(196,114,127,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .final-inner {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .final-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4.5vw, 48px);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            line-height: 1.15;
+        }
+
+        .final-title em {
+            font-style: italic;
+            color: var(--rose-light);
+        }
+
+        .final-sub {
+            font-size: 17px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 44px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .final-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 22px 56px;
+            background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+            color: var(--white);
+            font-family: 'Manrope', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 30px rgba(196, 114, 127, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .final-cta:hover::before {
+            left: 100%;
+        }
+
+        .final-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(196, 114, 127, 0.5);
+        }
+
+        .final-cta svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .final-micro {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 300;
+        }
+
+        .final-copy {
+            margin-top: 48px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.15);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .pain-cards {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .result-stats {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .hero-content {
+                padding: 60px 20px 40px;
+            }
+
+            .hero-cta,
+            .result-cta,
+            .final-cta {
+                padding: 18px 36px;
+                font-size: 14px;
+            }
+
+            .pain,
+            .result,
+            .forwho,
+            .final {
+                padding: 72px 20px;
+            }
+
+            .stat-number {
+                font-size: 40px;
+            }
+
+            .pain-quote {
+                padding: 20px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle-line {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-grain"></div>
+        <div class="hero-content">
+            <span class="hero-badge">Безкоштовний відеоурок</span>
+            <h1 class="hero-title">
+                Як отримувати <span class="accent">10+ заявок</span><br>щодня з блогу
+            </h1>
+            <p class="hero-subtitle-line">навіть на малих охопленнях</p>
+            <p class="hero-description">
+                Без постійних прогрівів 24/7, без виснаження від контенту і без відчуття що ти кричиш у порожнечу. Система, яка працює на тебе.
+            </p>
+            <a href="#" class="hero-cta">
+                Дивитись урок безкоштовно
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <p class="hero-micro">Доступ прийде в Telegram миттєво</p>
+        </div>
+    </section>
+
+    <!-- PAIN POINTS -->
+    <section class="pain">
+        <div class="pain-inner">
+            <p class="section-label reveal">Знайома ситуація?</p>
+            <h2 class="pain-title reveal">Коли блог забирає все —<br>а дає лише тишу</h2>
+            <div class="pain-cards">
+                <div class="pain-card reveal">
+                    <span class="pain-icon">🪞</span>
+                    <h3>Порожній директ</h3>
+                    <p>Ти виходиш в сторіз кожен день, ділишся, стараєшся — а у відповідь ні заявок, ні питань. Тільки перегляди.</p>
+                </div>
+                <div class="pain-card reveal">
+                    <span class="pain-icon">🫠</span>
+                    <h3>Виснаження</h3>
+                    <p>Контент перетворився на обов'язок. Ти прокидаєшся з думкою "знову треба щось публікувати" — і це з'їдає весь ресурс.</p>
+                </div>
+                <div class="pain-card reveal">
+                    <span class="pain-icon">🤫</span>
+                    <h3>Тихий сором</h3>
+                    <p>Ти навчаєш інших, маєш досвід і знання — але сама не можеш стабільно заробляти з блогу. І про це нікому не скажеш.</p>
+                </div>
+            </div>
+            <div class="pain-quote reveal">
+                <p>"Якщо ти робиш контент кожен день, а заявок немає — проблема не в тобі. А у відсутності системи, яка перетворює контент у гроші."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESULT -->
+    <section class="result">
+        <div class="result-inner">
+            <p class="section-label reveal">Що ти отримаєш із відео</p>
+            <h2 class="result-title reveal">Система, яка замінить <span class="accent">хаос</span><br>на стабільні заявки</h2>
+            <div class="result-stats">
+                <div class="stat-card reveal">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-unit">Заявок на день</div>
+                    <div class="stat-desc">Без прогрівів 24/7 та виснажливих сторіз</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-number">30</div>
+                    <div class="stat-unit">Хвилин на контент</div>
+                    <div class="stat-desc">Замість цілого дня, який з'їдає ваш ресурс</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-number">400к+</div>
+                    <div class="stat-unit">Грн на місяць</div>
+                    <div class="stat-desc">Результат мультиканальної системи продажів</div>
+                </div>
+            </div>
+            <div class="result-cta-wrap reveal">
+                <a href="#" class="result-cta">
+                    Отримати урок безкоштовно
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <p class="result-micro">Доступ прийде в Telegram миттєво</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOR WHO -->
+    <section class="forwho">
+        <div class="forwho-inner">
+            <p class="section-label reveal">Для кого цей урок</p>
+            <h2 class="forwho-title reveal">Якщо впізнаєш себе —<br>тобі сюди</h2>
+            <div class="forwho-list">
+                <div class="forwho-item reveal">
+                    <div class="forwho-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <p><strong>Ти експерт</strong> з досвідом і знаннями, але блог не дає стабільного потоку клієнтів</p>
+                </div>
+                <div class="forwho-item reveal">
+                    <div class="forwho-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <p><strong>Ти ведеш контент</strong>, але в директі тиша — люди дивляться, але не пишуть</p>
+                </div>
+                <div class="forwho-item reveal">
+                    <div class="forwho-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <p><strong>Ти вже пробувала</strong> прогріви, воронки, безкоштовники — але стабільного результату немає</p>
+                </div>
+                <div class="forwho-item reveal">
+                    <div class="forwho-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <p><strong>Ти хочеш систему</strong>, а не хаотичні спроби — щоб дохід був прогнозованим, а не випадковим</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final">
+        <div class="final-inner">
+            <h2 class="final-title reveal">
+                Твій блог може<br>працювати <em>на тебе</em>.
+            </h2>
+            <p class="final-sub reveal">Почни з безкоштовного уроку вже зараз.</p>
+            <a href="#" class="final-cta reveal">
+                Отримати урок в Telegram
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <p class="final-micro reveal">Миттєвий доступ · Безкоштовно</p>
+            <p class="final-copy">© 2026 Vladyslava. Усі права захищені.</p>
+        </div>
+    </section>
+
+    <script>
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
